@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilos.css">
+    <title>TypeTest - App</title>
+</head>
+<body>
+    
+    <div class="container">
+        <div class="stats">
+            <p>Tiempo: <span class="time">0</span></p>
+            <p>Errores: <span class="errores">0</span></p>
+        </div>
+        <div class="citas">
+        </div>
+        <textarea id="text-area" rows="3"></textarea>
+        <div class="buttons">
+            <button id="start-test" onclick="startTest()" class="btn btn-iniciar">Iniciar</button>
+            <button id="end-test" onclick="displayResult()" class="btn btn-reiniciar">Detener</button>
+        </div>
+        <div id="results" class="results">
+            <h4>Resultado</h4>
+            <div class="result-container">
+                <div class="presicion">
+                    <p>Precición: <span id="presicion"></span></p>
+                </div>
+                <div class="velocidad">
+                    <p>Velocidad: <span  id="velocidad"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>
