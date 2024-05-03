@@ -1,8 +1,22 @@
 
 //Random quotes api
 const quoteApiUrl = "https://api.quotable.io/random?minLength=80&maxLength=110";
+// Inputs
 const quoteSection = document.querySelector('.citas');
 const userInput = document.getElementById("text-area");
+
+//displays
+const displayTime = document.querySelector('.time');
+const displayErrores = document.querySelector('.errores');
+const displayVelocidad = document.getElementById("velocidad");
+const displayPresicion = document.getElementById("presicion");
+const resultados = document.getElementById('results');
+
+//Botones
+const btnVolver = document.getElementById("volverbtn");
+const btnStart = document.getElementById("start-test");
+const btnEndTest = document.getElementById("end-test");
+
 
 let quote = "";
 let time = 60;
@@ -59,7 +73,7 @@ userInput.addEventListener('input' , () => {
                 mistakes++;
                 char.classList.add('fail');
             };
-            document.querySelector('.errores').innerText = mistakes;
+            displayErrores.innerText = mistakes;
         }
     
         let check = quoteChars[0].every((element) => {
@@ -77,7 +91,7 @@ function upDatetimer(){
         displayResult();
     }
     else {
-        document.querySelector('.time').innerText = --time + "s";
+        displayTime.innerText = --time + "s";
     };
 };
 
@@ -85,17 +99,39 @@ function timeReduce(){
     timer = setInterval(upDatetimer , 1000);
 }
 
-const displayResult = () => {
-    document.getElementById('results').style.display = 'block';
+function reiniciar(){
+    quote = "";
     clearInterval(timer);
-    document.getElementById('end-test').style.display = 'none';
+
+    time = 60;
+    displayTime.innerText = time + "s";
+
+    mistakes = 0;
+    userInput.value = "";
+    quoteSection.innerHTML = "";
+
+    btnStart.style.display = "block";
+    btnEndTest.style.display = "none";
+    btnVolver.style.display = "none";
+    resultados.style.display = 'none';
+    userInput.disabled = true;
+    renderNewQuote();
+}
+
+const displayResult = () => {
+    resultados.style.display = 'block';
+    clearInterval(timer);
+    btnEndTest.style.display = 'none';
     userInput.disabled = true;
     let timeTaken = 1;
     if(timeTaken != 0){
         timeTaken = (60 - time) / 100;
     }
-    document.getElementById("velocidad").innerText = (userInput.value.length / 5 / timeTaken).toFixed(2) + "ppm";
-    document.getElementById("presicion").innerText = Math.round(((userInput.value.length - mistakes) / userInput.value.length) * 100) + "%";
+    displayVelocidad.innerText = (userInput.value.length / 5 / timeTaken).toFixed(2) + "ppm";
+    if(userInput.value.length > 0)
+        displayPresicion.innerText = Math.round(((userInput.value.length - mistakes) / userInput.value.length) * 100) + "%";
+    else
+    displayPresicion.innerText = "0";
 }
 
 const startTest = () => {
@@ -103,14 +139,18 @@ const startTest = () => {
     timer = "";
     userInput.disabled = false;
     timeReduce();
-    document.getElementById("start-test").style.display = "none";
-    document.getElementById("end-test").style.display = "block";
+
+
+    btnStart.style.display = "none";
+    btnEndTest.style.display = "block";
+    btnVolver.style.display = "block";
 };
 
 window.onload = () => {
     userInput.value = "";
-    document.getElementById("start-test").style.display = "block";
-    document.getElementById("end-test").style.display = "none";
+    btnStart.style.display = "block";
+    btnEndTest.style.display = "none";
+    btnVolver.style.display = "none";
     userInput.disabled = true;
     renderNewQuote();
 }
